@@ -1,0 +1,22 @@
+.{
+    .name = .codeman,
+
+    .version = "0.0.0",
+
+    .fingerprint = 0x2839acff7ec049c1,
+
+    .minimum_zig_version = "0.14.0",
+
+    .dependencies = .{
+        .wgpu_native_zig = .{
+            .url = "https://github.com/bronter/wgpu_native_zig/archive/refs/tags/v5.0.0.tar.gz",
+            .hash = "wgpu_native_zig-5.0.0-B9jeDOGZAgAkyePsJjgwsgHgo0guYS7S9cQqDcZx9kXL",
+        },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
