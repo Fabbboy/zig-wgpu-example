@@ -23,7 +23,7 @@ fn resize_callback(window: ?*glfw.GLFWwindow, width: c_int, height: c_int) callc
         .present_mode = .immediate,
     };
     surface.configure(&surface_config);
-    std.debug.print("Resized to {}x{}\n", .{@as(u32, @intCast(width)), @as(u32, @intCast(height))});
+    std.debug.print("Resized to {}x{}\n", .{ @as(u32, @intCast(width)), @as(u32, @intCast(height)) });
 }
 
 pub fn main() !void {
@@ -85,20 +85,21 @@ pub fn main() !void {
     );
 
     const adapter = switch (resp.status) {
-        .success => resp.adapter,
+        .success => resp.adapter.?,
         else => unreachable,
     };
-    if (adapter == null) {
-        return error.AdapterNotFound;
-    }
 
-    defer adapter.?.release();
+    var props: wgpu.AdapterInfo = undefined;
+    adapter.getInfo(&props);
+    std.debug.print("{s}\n", .{props.vendor});
+
+    defer adapter.release();
 
     const device_desc = wgpu.DeviceDescriptor{
         .required_limits = null,
     };
 
-    const dev_resp = adapter.?.requestDeviceSync(
+    const dev_resp = adapter.requestDeviceSync(
         &device_desc,
     );
 
